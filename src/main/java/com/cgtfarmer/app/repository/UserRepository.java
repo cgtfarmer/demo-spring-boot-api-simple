@@ -22,7 +22,7 @@ public class UserRepository {
     return this.users;
   }
 
-  public User findbyId(int id) {
+  public User findById(int id) {
     int index = this.findUserIndexById(id);
 
     return this.users.get(index);

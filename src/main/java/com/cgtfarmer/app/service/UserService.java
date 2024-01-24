@@ -20,8 +20,8 @@ public class UserService {
     return this.userRepository.findAll();
   }
 
-  public User findbyId(int id) {
-    return this.userRepository.findbyId(id);
+  public User findById(int id) {
+    return this.userRepository.findById(id);
   }
 
   public User create(User user) {

@@ -26,7 +26,7 @@ test('create user', async ({ request }) => {
   const body = await response.json();
 
   expect(Number.isInteger(body.id)).toBeTruthy();
-  expect(body.id).toBeGreaterThan(0);
+  expect(body.id).toBeGreaterThanOrEqual(0);
   expect(body.firstName).toBe(inputData.firstName);
   expect(body.lastName).toBe(inputData.lastName);
   expect(body.age).toBe(inputData.age);

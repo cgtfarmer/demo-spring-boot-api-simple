@@ -46,3 +46,4 @@ build/
 
 # Misc
 *.zip
+.DS_Store

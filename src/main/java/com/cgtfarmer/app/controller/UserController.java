@@ -33,37 +33,23 @@ public class UserController {
 
     List<User> response = this.userService.findAll();
 
-    // return ResponseEntity.ok("{ \"msg\": \"Hello, world!\"}");
     return ResponseEntity.ok(response);
   }
 
   @PostMapping
   public ResponseEntity<User> create(@RequestBody User request) {
     log.info("[UserController#create] request={}", request);
-    // log.info("[UserController#create]");
 
     User response = this.userService.create(request);
 
     return ResponseEntity.ok(response);
-    // return ResponseEntity.ok("{ \"msg\": \"Created successfully\"}");
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<User> show(@PathVariable Integer id) {
     log.info("[UserController#show] id={}", id);
 
-    // UserResponse response = this.userService.findAll();
-
-    // return ResponseEntity.ok(response);
-    // User user = User.builder()
-    //     .id(id)
-    //     .firstName("John")
-    //     .lastName("Doe")
-    //     .age(35)
-    //     .weight(185.3f)
-    //     .build();
-
-    User response = this.userService.findbyId(id);
+    User response = this.userService.findById(id);
 
     return ResponseEntity.ok(response);
   }

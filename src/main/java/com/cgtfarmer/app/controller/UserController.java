@@ -1,12 +1,16 @@
 package com.cgtfarmer.app.controller;
 
-import com.cgtfarmer.app.entity.UserEntity;
+import com.cgtfarmer.app.entity.User;
+import com.cgtfarmer.app.service.UserService;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,51 +20,74 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
-  // private final UserService userService;
+  private final UserService userService;
 
-  // @Autowired
-  // public UserController(UserService userService) {
-  //   this.userService = userService;
-  // }
+  @Autowired
+  public UserController(UserService userService) {
+    this.userService = userService;
+  }
 
   @GetMapping
-  public ResponseEntity<String> index() {
+  public ResponseEntity<List<User>> index() {
     log.info("[UserController#index]");
 
-    // UserResponse response = this.userService.findAll();
+    List<User> response = this.userService.findAll();
 
-    // return ResponseEntity.ok(response);
-    return ResponseEntity.ok("{ \"msg\": \"Hello, world!\"}");
+    // return ResponseEntity.ok("{ \"msg\": \"Hello, world!\"}");
+    return ResponseEntity.ok(response);
   }
 
   @PostMapping
-  public ResponseEntity<String> create(
-    // @RequestBody UserRequest request
-  ) {
-    // log.info("[UserController#create] {}", request);
-    log.info("[UserController#create]");
+  public ResponseEntity<User> create(@RequestBody User request) {
+    log.info("[UserController#create] request={}", request);
+    // log.info("[UserController#create]");
 
-    // UserResponse response = this.userService.create(request);
+    User response = this.userService.create(request);
 
-    // return ResponseEntity.ok(response);
-    return ResponseEntity.ok("{ \"msg\": \"Created successfully\"}");
+    return ResponseEntity.ok(response);
+    // return ResponseEntity.ok("{ \"msg\": \"Created successfully\"}");
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<UserEntity> show(@PathVariable Long id) {
+  public ResponseEntity<User> show(@PathVariable Integer id) {
     log.info("[UserController#show] id={}", id);
 
     // UserResponse response = this.userService.findAll();
 
     // return ResponseEntity.ok(response);
-    UserEntity user = UserEntity.builder()
-        .id(id)
-        .firstName("John")
-        .lastName("Doe")
-        .age(35)
-        .weight(185.3f)
-        .build();
+    // User user = User.builder()
+    //     .id(id)
+    //     .firstName("John")
+    //     .lastName("Doe")
+    //     .age(35)
+    //     .weight(185.3f)
+    //     .build();
 
-    return ResponseEntity.ok(user);
+    User response = this.userService.findbyId(id);
+
+    return ResponseEntity.ok(response);
+  }
+
+  @PutMapping("/{id}")
+  public ResponseEntity<User> update(
+    @PathVariable Integer id,
+    @RequestBody User request
+  ) {
+    log.info("[UserController#update] id={}, request={}", id, request);
+
+    request.setId(id);
+
+    User response = this.userService.update(request);
+
+    return ResponseEntity.ok(response);
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<String> destroy(@PathVariable Integer id) {
+    log.info("[UserController#destroy] id={}", id);
+
+    this.userService.destroy(id);
+
+    return ResponseEntity.ok("{ \"msg\": \"Deleted successfully\" }");
   }
 }

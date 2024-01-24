@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserEntity {
+public class User{
 
-  private Long id;
+  private Integer id;
 
   private String firstName;
 

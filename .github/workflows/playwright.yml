@@ -7,6 +7,7 @@ on:
 
 jobs:
   test:
+    name: E2E Tests
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -17,5 +18,5 @@ jobs:
           docker-compose build
       - name: Run tests
         run: |
-          docker-compose up -d app mvn spring-boot:run & sleep 20
+          docker-compose up -d app & sleep 20
           docker-compose up playwright
